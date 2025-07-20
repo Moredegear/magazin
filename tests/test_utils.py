@@ -8,7 +8,7 @@ def test_get_class_from_json():
     assert category_phone.name == "Смартфоны"
     assert category_phone.description == ("Смартфоны, как средство не только коммуникации,"
                                           " но и получение дополнительных функций для удобства жизни")
-    assert category_phone.product_count == 3
+    assert category_phone.product_count == 4
     assert category_phone.category_count == 2
     assert category_tv.name == "Телевизоры"
     assert product_1.name == "Samsung Galaxy C23 Ultra"

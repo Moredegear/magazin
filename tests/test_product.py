@@ -1,7 +1,5 @@
 import pytest
 from src.product import Product
-from src.product import Category
-from src.product import get_class_from_json
 
 
 @pytest.fixture

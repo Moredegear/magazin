@@ -1,5 +1,6 @@
 from src.utils import get_class_from_json
 
+
 def test_get_class_from_json():
     category_product_dict = get_class_from_json("../data/products.json")
     category_phone = category_product_dict["category"][0]

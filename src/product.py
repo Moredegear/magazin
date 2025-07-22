@@ -16,9 +16,7 @@ class Product:
     @classmethod
     def new_product(cls, dict_product, list_products):
         """обновляет список продуктов(цену,количество,ассортимент)"""
-        result = None
         if list_products != []:
-            print('cписок не пустой')
             for product in list_products:
                 if product.name == dict_product['name']:
                     product.quantity += dict_product['quantity']

@@ -13,6 +13,11 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
+
+    def __str__(self):
+        return f'{self.name}, {self.get_price} руб. Остаток: {self.quantity} шт.'
+
+
     @classmethod
     def new_product(cls, dict_product, list_products):
         """обновляет список продуктов(цену,количество,ассортимент)"""
@@ -20,12 +25,8 @@ class Product:
             for product in list_products:
                 if product.name == dict_product['name']:
                     product.quantity += dict_product['quantity']
-                    if product.get_price >= dict_product['price']:
-                        return []
-                    else:
-                        product.get_price(dict_product['price'])
-                        return []
-
+                    product.get_price = max(product.get_price, dict_product['price'])
+                    return []
         else:
             cls.name = dict_product['name']
             cls.description = dict_product['description']
@@ -53,3 +54,6 @@ class Product:
             else:
                 self.__price = price
                 print("цена изменена")
+
+    def __add__(self, other):
+        return self.get_price * self.quantity + other.get_price * other.quantity

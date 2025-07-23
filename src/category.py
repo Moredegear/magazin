@@ -16,17 +16,30 @@ class Category:
         Category.category_count += 1
         Category.product_count += len(self.__products)
 
+    def __str__(self):
+        return f'{self.name}, количество продуктов: {self.all_products} шт.'
+
+    @property
+    def all_products(self):
+        result = 0
+        for product in self.__products:
+            print (product)
+            result += product.quantity
+        return result
+
+
     def add_product(self, product: Product):
-        dict_product = {}
-        dict_product['name'] = product.name
-        dict_product['description'] = product.description
-        dict_product['price'] = product.get_price
-        dict_product['quantity'] = product.quantity
-        product = Product.new_product(dict_product, self.__products)
-        if product == []:
-            print('количество тавара обнавленно')
-        else:
-            self.__products.append(product)
+        if issubclass(product.__class__, Product):
+            dict_product = {}
+            dict_product['name'] = product.name
+            dict_product['description'] = product.description
+            dict_product['price'] = product.get_price
+            dict_product['quantity'] = product.quantity
+            product = Product.new_product(dict_product, self.__products)
+            if product == []:
+                print('количество тавара обнавленно')
+            else:
+                self.__products.append(product)
 
     @property
     def get_products(self):

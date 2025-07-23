@@ -1,6 +1,7 @@
 import pytest
 from src.category import Category
 from src.utils import get_class_from_json
+from src.product import Product
 
 
 @pytest.fixture
@@ -21,7 +22,9 @@ def test_category():
     category_phone = Category("Смртфоны", "Полезная техника", [])
     category_phone.add_product(product_sm)
     assert category_phone.get_products == ['Samsung Galaxy C23 Ultra, 180000.0руб., Остаток: 5шт.']
+    product_sm.get_price = 2000000.0
     category_phone.add_product(product_sm)
-    new_price = 2000000.0
-    product_sm.get_price(new_price)
-    assert category_phone.get_products == ['Samsung Galaxy C23 Ultra, 200000.0руб., Остаток: 10шт.']
+    assert category_phone.get_products == ['Samsung Galaxy C23 Ultra, 2000000.0руб., Остаток: 10шт.']
+    category_tv = category_product_dict["category"][1]
+    category_phone.add_product(category_tv)
+    assert category_phone.get_products == ['Samsung Galaxy C23 Ultra, 2000000.0руб., Остаток: 10шт.']

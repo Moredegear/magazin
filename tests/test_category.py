@@ -1,7 +1,6 @@
 import pytest
 from src.category import Category
 from src.utils import get_class_from_json
-from src.product import Product
 
 
 @pytest.fixture
@@ -16,7 +15,7 @@ def test_category_init(category_fruits):
     assert category_fruits.category_count == 1
 
 
-def test_category():
+def test_category(capsys):
     category_product_dict = get_class_from_json("../data/products.json")
     product_sm = category_product_dict["products"][0]
     category_phone = Category("Смртфоны", "Полезная техника", [])
@@ -28,3 +27,8 @@ def test_category():
     category_tv = category_product_dict["category"][1]
     category_phone.add_product(category_tv)
     assert category_phone.get_products == ['Samsung Galaxy C23 Ultra, 2000000.0руб., Остаток: 10шт.']
+    product_app = category_product_dict["products"][1]
+    category_phone.add_product(product_app)
+    print(category_phone)
+    captured = capsys.readouterr()
+    assert captured.out == 'Смртфоны, количество продуктов: 18 шт.\n'

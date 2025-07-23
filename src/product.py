@@ -27,6 +27,14 @@ class Product:
                     product.quantity += dict_product['quantity']
                     product.get_price = max(product.get_price, dict_product['price'])
                     return []
+                else:
+                    cls.name = dict_product['name']
+                    cls.description = dict_product['description']
+                    cls.price = dict_product['price']
+                    cls.quantity = dict_product['quantity']
+                    result = cls(dict_product['name'], dict_product['description'], dict_product['price'],
+                                 dict_product['quantity'])
+                    return result
         else:
             cls.name = dict_product['name']
             cls.description = dict_product['description']
@@ -34,7 +42,7 @@ class Product:
             cls.quantity = dict_product['quantity']
             result = cls(dict_product['name'], dict_product['description'], dict_product['price'],
                          dict_product['quantity'])
-        return result
+            return result
 
     @property
     def get_price(self):
@@ -53,7 +61,6 @@ class Product:
                     print("Изменение цены отменено")
             else:
                 self.__price = price
-                print("цена изменена")
 
     def __add__(self, other):
         return self.get_price * self.quantity + other.get_price * other.quantity

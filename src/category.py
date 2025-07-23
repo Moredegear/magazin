@@ -23,7 +23,6 @@ class Category:
     def all_products(self):
         result = 0
         for product in self.__products:
-            print (product)
             result += product.quantity
         return result
 
@@ -37,7 +36,7 @@ class Category:
             dict_product['quantity'] = product.quantity
             product = Product.new_product(dict_product, self.__products)
             if product == []:
-                print('количество тавара обнавленно')
+                pass
             else:
                 self.__products.append(product)
 

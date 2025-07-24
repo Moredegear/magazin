@@ -26,7 +26,6 @@ class Category:
             result += product.quantity
         return result
 
-
     def add_product(self, product: Product):
         if issubclass(product.__class__, Product):
             dict_product = {}

@@ -61,7 +61,7 @@ class Product:
                 self.__price = price
 
     def __add__(self, other):
-        if isinstance(other, self.__class__):
+        if type(other) == type(self):
             return self.get_price * self.quantity + other.get_price * other.quantity
         else:
             raise TypeError("Нельзя складывать разные товары")

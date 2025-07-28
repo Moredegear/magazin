@@ -1,6 +1,7 @@
 import pytest
 from src.category import Category
 from src.utils import get_class_from_json
+from src.config import BASE_DIR
 
 
 @pytest.fixture
@@ -16,7 +17,8 @@ def test_category_init(category_fruits):
 
 
 def test_category(capsys):
-    category_product_dict = get_class_from_json("../data/products.json")
+    products_path = BASE_DIR.joinpath('data', 'products.json')
+    category_product_dict = get_class_from_json(products_path)
     product_sm = category_product_dict["products"][0]
     category_phone = Category("Смртфоны", "Полезная техника", [])
     category_phone.add_product(product_sm)

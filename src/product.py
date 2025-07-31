@@ -1,7 +1,28 @@
+from abc import ABC, abstractmethod
 
 
-class Product:
+class BaseProduct(ABC):
+    @abstractmethod
+    def __add__(self, other):
+        pass
+
+    @abstractmethod
+    def __str__(self):
+        pass
+
+
+class PrintMixin:
+    def __init__(self):
+        super().__init__()
+        print(repr(self))
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.__str__()})"
+
+
+class Product(BaseProduct, PrintMixin):
     """класс для пркдставления продукта"""
+
     name: str
     description: str
     price: float
@@ -12,34 +33,43 @@ class Product:
         self.description = description
         self.__price = price
         self.quantity = quantity
+        super().__init__()
 
     def __str__(self):
-        return f'{self.name}, {self.get_price} руб. Остаток: {self.quantity} шт.'
+        return f"{self.name}, {self.get_price} руб. Остаток: {self.quantity} шт."
 
     @classmethod
     def new_product(cls, dict_product, list_products):
         """обновляет список продуктов(цену,количество,ассортимент)"""
         if list_products != []:
             for product in list_products:
-                if product.name == dict_product['name']:
-                    product.quantity += dict_product['quantity']
-                    product.get_price = max(product.get_price, dict_product['price'])
+                if product.name == dict_product["name"]:
+                    product.quantity += dict_product["quantity"]
+                    product.get_price = max(product.get_price, dict_product["price"])
                     return []
                 else:
-                    cls.name = dict_product['name']
-                    cls.description = dict_product['description']
-                    cls.price = dict_product['price']
-                    cls.quantity = dict_product['quantity']
-                    result = cls(dict_product['name'], dict_product['description'], dict_product['price'],
-                                 dict_product['quantity'])
+                    cls.name = dict_product["name"]
+                    cls.description = dict_product["description"]
+                    cls.price = dict_product["price"]
+                    cls.quantity = dict_product["quantity"]
+                    result = cls(
+                        dict_product["name"],
+                        dict_product["description"],
+                        dict_product["price"],
+                        dict_product["quantity"],
+                    )
                     return result
         else:
-            cls.name = dict_product['name']
-            cls.description = dict_product['description']
-            cls.price = dict_product['price']
-            cls.quantity = dict_product['quantity']
-            result = cls(dict_product['name'], dict_product['description'], dict_product['price'],
-                         dict_product['quantity'])
+            cls.name = dict_product["name"]
+            cls.description = dict_product["description"]
+            cls.price = dict_product["price"]
+            cls.quantity = dict_product["quantity"]
+            result = cls(
+                dict_product["name"],
+                dict_product["description"],
+                dict_product["price"],
+                dict_product["quantity"],
+            )
             return result
 
     @property
@@ -52,8 +82,10 @@ class Product:
             print("Цена не должна быть нулевая или отрицательная")
         else:
             if price < self.__price:
-                answer = input("Вы уверены что хотите понизить цену товара(Да:'Y' Нет:'N')")
-                if answer.lower() == 'y':
+                answer = input(
+                    "Вы уверены что хотите понизить цену товара(Да:'Y' Нет:'N')"
+                )
+                if answer.lower() == "y":
                     self.__price = price
                 else:
                     print("Изменение цены отменено")
@@ -67,8 +99,10 @@ class Product:
             raise TypeError("Нельзя складывать разные товары")
 
 
-class Smartphone(Product):
-    def __init__(self, name, description, price, quantity, efficiency, model, memory, color):
+class Smartphone(Product, PrintMixin):
+    def __init__(
+        self, name, description, price, quantity, efficiency, model, memory, color
+    ):
         super().__init__(name, description, price, quantity)
         self.efficiency = efficiency
         self.model = model
@@ -76,8 +110,10 @@ class Smartphone(Product):
         self.color = color
 
 
-class LawnGrass(Product):
-    def __init__(self, name, description, price, quantity, country, germination_period, color):
+class LawnGrass(Product, PrintMixin):
+    def __init__(
+        self, name, description, price, quantity, country, germination_period, color
+    ):
         super().__init__(name, description, price, quantity)
         self.country = country
         self.germination_period = germination_period

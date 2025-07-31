@@ -50,3 +50,15 @@ def test_init(product_banan, product_banan2, product_lawngrass, product_smartpho
         product_smartphone + product_lawngrass
     assert str(exc_info.value) == 'Нельзя складывать разные товары'
     assert (product_lawngrass_2 + product_lawngrass) == 42000
+    product_one = Product("Продукт1", "Описание", "20", "50")
+    captured = capsys.readouterr()
+    assert captured.out == 'Product(Продукт1, 20 руб. Остаток: 50 шт.)\n'
+    product_two = Smartphone("Samsung Galaxy C23 Ultra", "256GB, Серый цвет, 200MP камера",
+                             180000.0,
+                             5, 3360, "Galaxy", 256, "Серый")
+    captured = capsys.readouterr()
+    assert captured.out == 'Smartphone(Samsung Galaxy C23 Ultra, 180000.0 руб. Остаток: 5 шт.)\n'
+    product_three = LawnGrass("LawnGrass", "красивый и легкий в уходе", 3000, 6,
+                              "Italy", 30, "Green")
+    captured = capsys.readouterr()
+    assert captured.out == 'LawnGrass(LawnGrass, 3000 руб. Остаток: 6 шт.)\n'

@@ -11,10 +11,17 @@ def get_class_from_json(file_path: str) -> dict:
     with open(file_path, encoding="utf-8") as json_file:
         data = json.load(json_file)
         for categoryes in data:
-            category = Category(categoryes["name"], categoryes["description"], categoryes["products"])
+            category = Category(
+                categoryes["name"], categoryes["description"], categoryes["products"]
+            )
             category_list.append(category)
             for products in categoryes["products"]:
-                product = Product(products["name"], products["description"], products["price"], products["quantity"])
+                product = Product(
+                    products["name"],
+                    products["description"],
+                    products["price"],
+                    products["quantity"],
+                )
                 product_list.append(product)
     result["category"] = category_list
     result["products"] = product_list

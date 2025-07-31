@@ -9,13 +9,20 @@ class BaseCategory(ABC):
 
 
 class Order(BaseCategory):
-    def __init__(self, product: Product):
+    order_count = 0
+
+    def __init__(self, product: Product, quantity):
         self.product = product
-        self.quantity = product.quantity
-        self.price = product.get_price * product.quantity
+        self.quantity = quantity
+        self.__price = product.get_price * quantity
+        Order.order_count += 1
 
     def __str__(self):
-        return f"Заказ на {self.quantity} {self.product.name} Общей стоимостью: {self.price}руб."
+        return f"Заказ на {self.quantity} {self.product.name} Общей стоимостью: {self.get_price}руб."
+
+    @property
+    def get_price(self):
+        return self.__price
 
 
 class Category(BaseCategory):

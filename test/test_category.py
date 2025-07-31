@@ -42,7 +42,7 @@ def test_order(category_fruits, capsys):
     products_path = BASE_DIR.joinpath('data', 'products.json')
     category_product_dict = get_class_from_json(products_path)
     product_sm = category_product_dict["products"][0]
-    order = Order(product_sm)
+    order = Order(product_sm, 5)
     print(order)
     captured = capsys.readouterr()
     captured_list = captured.out.split('\n')

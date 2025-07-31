@@ -95,8 +95,7 @@ class Product(BaseProduct, PrintMixin):
     def __add__(self, other):
         if type(other) == type(self):
             return self.get_price * self.quantity + other.get_price * other.quantity
-        else:
-            raise TypeError("Нельзя складывать разные товары")
+        raise TypeError("Нельзя складывать разные товары")
 
 
 class Smartphone(Product, PrintMixin):

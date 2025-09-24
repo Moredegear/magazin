@@ -14,7 +14,7 @@ def test_category_init(category_fruits):
     assert category_fruits.name == 'fruits'
     assert category_fruits.description == 'вкусные и полезные фрукты'
     assert category_fruits.product_count == 3
-    assert category_fruits.category_count == 1
+    assert category_fruits.category_count == 2
 
 
 def test_category(capsys):
@@ -36,6 +36,8 @@ def test_category(capsys):
     captured = capsys.readouterr()
     captured_list = captured.out.split('\n')
     assert captured_list[-2] == 'Смртфоны, количество продуктов: 18 шт.'
+    category_zero = Category('name', 'desc', [])
+    assert category_zero.average_price_tag() == 0
 
 
 def test_order(category_fruits, capsys):

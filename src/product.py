@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from src.exsept import Product_Zero, Order_Zero
 
 
 class BaseProduct(ABC):
@@ -29,10 +30,12 @@ class Product(BaseProduct, PrintMixin):
     quantity: int
 
     def __init__(self, name, description, price, quantity):
+        if int(quantity) <= 0:
+            raise Product_Zero(int(quantity))
         self.name = name
         self.description = description
         self.__price = price
-        self.quantity = quantity
+        self.quantity = int(quantity)
         super().__init__()
 
     def __str__(self):
@@ -51,7 +54,15 @@ class Product(BaseProduct, PrintMixin):
                     cls.name = dict_product["name"]
                     cls.description = dict_product["description"]
                     cls.price = dict_product["price"]
-                    cls.quantity = dict_product["quantity"]
+                    try:
+                        cls.quantity = dict_product["quantity"]
+                    except Product_Zero as e:
+                        print(e)
+                        print("не нужно добовлять тавар его количетво ноль")
+                    else:
+                        print("")
+                    finally:
+                        print("обработка добавления товара завершена.")
                     result = cls(
                         dict_product["name"],
                         dict_product["description"],
@@ -96,6 +107,13 @@ class Product(BaseProduct, PrintMixin):
         if type(other) == type(self):
             return self.get_price * self.quantity + other.get_price * other.quantity
         raise TypeError("Нельзя складывать разные товары")
+
+    def quantity_update(self, quantity):
+        remainder = self.quantity - quantity
+        if remainder > 0:
+            self.quantity -= quantity
+        else:
+            raise Order_Zero(remainder, quantity)
 
 
 class Smartphone(Product, PrintMixin):

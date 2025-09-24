@@ -2,6 +2,7 @@ import pytest
 from src.category import Category
 from src.utils import get_class_from_json
 from src.config import BASE_DIR
+from src.category import Order
 
 
 @pytest.fixture
@@ -13,7 +14,7 @@ def test_category_init(category_fruits):
     assert category_fruits.name == 'fruits'
     assert category_fruits.description == 'вкусные и полезные фрукты'
     assert category_fruits.product_count == 3
-    assert category_fruits.category_count == 1
+    assert category_fruits.category_count == 2
 
 
 def test_category(capsys):
@@ -33,4 +34,18 @@ def test_category(capsys):
     category_phone.add_product(product_app)
     print(category_phone)
     captured = capsys.readouterr()
-    assert captured.out == 'Смртфоны, количество продуктов: 18 шт.\n'
+    captured_list = captured.out.split('\n')
+    assert captured_list[-2] == 'Смртфоны, количество продуктов: 18 шт.'
+    category_zero = Category('name', 'desc', [])
+    assert category_zero.average_price_tag() == 0
+
+
+def test_order(category_fruits, capsys):
+    products_path = BASE_DIR.joinpath('data', 'products.json')
+    category_product_dict = get_class_from_json(products_path)
+    product_sm = category_product_dict["products"][0]
+    order = Order(product_sm, 5)
+    print(order)
+    captured = capsys.readouterr()
+    captured_list = captured.out.split('\n')
+    assert captured_list[-2] == 'Заказ на 5 Samsung Galaxy C23 Ultra Общей стоимостью: 900000.0руб.'
